@@ -112,15 +112,22 @@ $(document).ready(function(){
         }
     });
     $("#btn-go").click(function(){
-        $('input[type=radio][name=speed]').attr("disabled", "disabled");
-        titles = Object.keys(corpus);
-        title = titles[Math.floor(Math.random() * titles.length)];
-        temp = corpus[title];
-        temp.unshift("You are reading "+title);
-        passage = temp;
-        //check
-        userData["name"] = $("#name").val();
-        userData[title] = [];
+        var inputname = document.getElementById("name");
+        if(inputname.reportValidity()){
+            $('input[type=radio][name=speed]').attr("disabled", "disabled");
+            titles = Object.keys(corpus);
+            title = titles[Math.floor(Math.random() * titles.length)];
+            temp = corpus[title];
+            temp.unshift("You are reading "+title);
+            passage = temp;
+            //pasage = ["This", "is", "a", "test", "passage"];
+            //check
+            userData["name"] = $("#name").val();
+            console.log("Name: "+userData["name"]);
+            userData[title] = [];
+            $("#btn-go").attr("disabled","disabled");
+        }
+        
     })
 });
 
@@ -158,11 +165,6 @@ function p4() {
     
 }
 
-
-function startFormalTest(){
-    $('input[type=radio][name=speed]').attr("disabled", "disabled");
-    passage = corpus["Another Day at War"];
-}
 
 function flashText(){
     //speed = letter/sec (global variable)

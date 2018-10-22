@@ -114,11 +114,8 @@ http.createServer(function(req, res) {
     		body += chunk;
     	})
     	req.on("end", function() {
-            tempFileName = JSON.parse(body).fileName;
-            if (!fs.existsSync('./testdata/'+tempFileName)){
-                fs.mkdirSync('./testdata/'+tempFileName);
-            }
-            fs.writeFile('./testdata/'+tempFileName+'/'+tempFileName+".json", body, function(){
+            tempFileName = JSON.parse(body)["name"];
+            fs.writeFile('./testdata/'+tempFileName+".json", body, function(){
                 console.log("WRITE data" + " TO " + tempFileName + ".json");
                 res.end();
             });
