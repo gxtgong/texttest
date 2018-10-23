@@ -30,7 +30,7 @@ var corpus = {
 
 
 var passage = [];
-var speed = 0.8;
+var speed = 0.7;
 var title ="textsample";
 
 function split(corpus) {
@@ -84,13 +84,13 @@ $(document).ready(function(){
             speedLevel = this.value;
             if (speedLevel == "low") {
                 console.log("Speed changed to low");
-                speed = 0.8;
+                speed = 0.7;
             }else if (speedLevel == "med") {
                 console.log("Speed changed to median");
-                speed = 0.5;
+                speed = 0.4;
             }else if (speedLevel == "high") {
                 console.log("Speed changed to high");
-                speed = 0.3;
+                speed = 0.25;
             }else{
                 console.log("No change applied: "+speedLevel);
             }
@@ -113,9 +113,8 @@ $(document).ready(function(){
                 }
             });
         });
-        
     });
-    /*
+    
     split(corpus);
     userData["wiki"] = [];
     flashText();
@@ -151,18 +150,12 @@ function startFormalTest(){
     $('input[type=radio][name=speed]').attr("disabled", "disabled");
     passage = corpus["Another Day at War"];
 }
-
     sample = {};
     sample["wiki"] = passage;
     $.post('sample.json', JSON.stringify(sample, null, 4), function(){
         console.log("Post sample.json successfully");
     });
-    
-    
-    */
 });
-
-
 
 function flashText(){
     //speed = letter/sec (global variable)
