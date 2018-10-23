@@ -71,19 +71,6 @@ function timestamp(raw=false) {
 $(document).ready(function(){
     $.getJSON('testp.json', function(data){
         console.log("testp.json Read");
-        //passage = data["passage"];        
-    /*captureCamera(function(camera) {
-        setSrcObject(camera, vidresult);
-        //vidresult.play();
-        vidrecorder = RecordRTC(camera, {
-            type: 'video',
-            width: 1280,
-            height: 720
-        });
-        vidrecorder.startRecording();
-        vidrecorder.camera = camera;
-    });
-    userData.startTime = timestamp();*/
 
     $.getJSON('sample.json', function(data){
 
@@ -177,38 +164,6 @@ function startFormalTest(){
 
 
 
-function nextpage() {
-    if (page_num == 1) {
-        p1();
-    }else if (page_num == 2) {
-        p2();
-    }else if (page_num == 3) {
-        p3();
-    }else if (page_num == 4) {
-        p4();
-    }else{}
-}
-
-//collect basic info
-function p1() {
-    
-};
-
-//hide emojis and play video
-function p2() {
-    
-}
-
-function p3() {
-    
-}
-
-function p4() {
-    
-}
-
-
->>>>>>> 87e0a31b9dcf1a723b5af176dfcd4431205bf244
 function flashText(){
     //speed = letter/sec (global variable)
     var word = passage.shift();
