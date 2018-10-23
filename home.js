@@ -28,6 +28,11 @@ var corpus = {
     "Another Day at War": "The fear and anxiety begin shortly before the battle.  I tremble, and a nervous sweat trickles down my brow. Self-doubt plagues my thoughts. My heart races. I ponder upon the consequences should I lose, and the spoils should I win.  If I should fail, all my men would fall; I would be humiliated, and worst of all, my rightful place as king would be stolen from me.  If I win, the glory will be all mine.  I stand at the back of my army.  All of my men are at my sides and in front of me. Every soldier able to fight has come prepared to lay down his life for me and they will protect me to their death.  My wife is at my side. I did not protest when she requested to accompany me. I was glad.  She is my most trusted advisor and my deadliest assassin. She clutches my hand and my racing heart relaxes.  I am the king of this army and our great nation. Although the circumstances that brought us together as a nation are unknown to us now, we stand united by our cause: to defeat our adversary. We march onward toward the spot for battle.  Over the hills, I spy a glance of the enemy, and my heart begins to pound again. As we approach the shadow of the adversary, the presence of our enemy looms over us like a torrential storm cloud waiting to burst.  The enemy has the same formation as my own forces, as if mimicking us.  The only seeming difference is their skin, not a colored man among them.  The entirety of their army is white, as if the soldiers were made from snow. Their goal is the same as ours, to eliminate us and topple me.  The long march to the battlefield has not prepared the men, nor myself, for this moment.  I make eye contact with the lord of the other kingdom. He stares at me with eyes cold enough to freeze hell over.  The enemy beings to chant cries of war.  My men have no such attitude about them. Although the lump in my throat and the shaking of my legs protest, I must speak to my men.  I stride to the front of the line and begin my speech. “Men!” I shout. Even the other side quiets down. The entirety of the world centers on me as I speak. I clear my throat and proceed. “The enemy will not overtake us today, nor any other day.  They will come for your wives, your lives, your children!  They will stop at nothing to outwit and outman you.  We will not let that happen.  We will fight not as individuals today, but as a nation; a nation of brothers, sisters, fathers, and mothers.  A nation that will not concede. A nation that will rise up when called upon to defeat any threat to our lives and our peace.  And we…will…win!” The men erupt in shouts of approval and instantly their moral is boosted.  I step behind my men into my proper place and adjust the crown on top of my head.  The enemy gives no warning nor reaction to my speech.  Instead, a foot soldier responds, marching straight toward my army. His white skin crawls as he strides confidently towards us. My hand shakes as I beckon my soldier to meet him.  The two size each other up, but do not engage in combat. Another foot soldier joins his white comrade.  This time instead of biding his time, my soldier strikes down the enemy, quick and painless.  The enemy attempts a flank and my forces counter by positioning knights in the center of the battlefield.  The fight is just beginning.  The battle is long and painful.  The men have not yelled, nor screamed, nor chanted since it began.  The battle is fought in almost complete silence.  Only the occasional death of a soldier results in a brief clash of armor, and then it is over almost as soon as it began.  Eventually, the enemy appears to be beating us.  Nearly all my men have been killed, and even our religious leaders have been slain.  Our causalities are many, but we have put up resistance.  The enemy has lost a considerable amount of foot soldiers and half of their legion of knights has been defeated. We enter deeper into the battle and my nerves get worse.  My wife has not yet left my side but now she departs, running straight across the battlefield to save a foot soldier.  The battle draws on until it feels like it may never end.  An enemy’s group of foot soldiers strike down my castle, the only protection my army had left. My Queen turns and faces me. My wife looks me inthe eyes; she knows what she needs to do.  She crosses the battlefield in a slow, rhythmic motion.  Her final dance as Queen of my kingdom.  The enemy sees the opportunity and strikes without a second thought. The enemy’s castle fires a shot from a ballista directly in front of where my Queen is standing. She goes down, her head on the other end of a stake.  I do not sink to my knees, nor do I mourn for her, for because of her, victory is now inevitable. My heart flutters, as this will finally be the end of the conflict.  I will be a renown king.  The spoils will be all mine.  With the battle closing, I think about the sacrifices that have been made in my honor. Men, Horses, and most importantly my wife have laid down their lives for me.  They will never be forgotten. It is time to end this.  My knights, clad in armor as black as night,  trot into position, trapping the enemy King where he cannot escape, assuring his death. I adjust my glasses after letting go of the piece, and look up from the board.  “Checkmate,” I murmur to my opponent."
 };
 
+
+var passage = [];
+var speed = 0.8;
+var title ="textsample";
+
 function split(corpus) {
     for (var title in corpus) {
         corpus[title] = corpus[title].split(" ");
@@ -67,7 +72,63 @@ $(document).ready(function(){
     $.getJSON('testp.json', function(data){
         console.log("testp.json Read");
         //passage = data["passage"];        
+    /*captureCamera(function(camera) {
+        setSrcObject(camera, vidresult);
+        //vidresult.play();
+        vidrecorder = RecordRTC(camera, {
+            type: 'video',
+            width: 1280,
+            height: 720
+        });
+        vidrecorder.startRecording();
+        vidrecorder.camera = camera;
     });
+    userData.startTime = timestamp();*/
+
+    $.getJSON('sample.json', function(data){
+
+        console.log("sample.json Read");
+        sampletitles = Object.keys(data);
+        s = sampletitles[Math.floor(Math.random() * sampletitles.length)];
+        passage = data[s];
+        userData["textsample"] = [];
+        flashText();
+        $('input[type=radio][name=speed]').change(function(){
+            speedLevel = this.value;
+            if (speedLevel == "low") {
+                console.log("Speed changed to low");
+                speed = 0.8;
+            }else if (speedLevel == "med") {
+                console.log("Speed changed to median");
+                speed = 0.5;
+            }else if (speedLevel == "high") {
+                console.log("Speed changed to high");
+                speed = 0.3;
+            }else{
+                console.log("No change applied: "+speedLevel);
+            }
+        });
+        $.getJSON('corpus.json', function(data){
+            $("#btn-go").click(function(){
+                corpus = data;
+                var inputname = document.getElementById("name");
+                if(inputname.reportValidity()){
+                    $('input[type=radio][name=speed]').attr("disabled", "disabled");
+                    titles = Object.keys(corpus);
+                    title = titles[Math.floor(Math.random() * titles.length)];
+                    temp = corpus[title];
+                    temp.unshift("You are reading "+title);
+                    passage = temp;
+                    userData["name"] = $("#name").val();
+                    console.log("Name: "+userData["name"]);
+                    userData[title] = [];
+                    $("#btn-go").attr("disabled","disabled");
+                }
+            });
+        });
+        
+    });
+    /*
     split(corpus);
     userData["wiki"] = [];
     flashText();
@@ -104,6 +165,50 @@ function startFormalTest(){
     passage = corpus["Another Day at War"];
 }
 
+    sample = {};
+    sample["wiki"] = passage;
+    $.post('sample.json', JSON.stringify(sample, null, 4), function(){
+        console.log("Post sample.json successfully");
+    });
+    
+    
+    */
+});
+
+
+
+function nextpage() {
+    if (page_num == 1) {
+        p1();
+    }else if (page_num == 2) {
+        p2();
+    }else if (page_num == 3) {
+        p3();
+    }else if (page_num == 4) {
+        p4();
+    }else{}
+}
+
+//collect basic info
+function p1() {
+    
+};
+
+//hide emojis and play video
+function p2() {
+    
+}
+
+function p3() {
+    
+}
+
+function p4() {
+    
+}
+
+
+>>>>>>> 87e0a31b9dcf1a723b5af176dfcd4431205bf244
 function flashText(){
     //speed = letter/sec (global variable)
     var word = passage.shift();

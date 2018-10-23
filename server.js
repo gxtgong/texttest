@@ -109,17 +109,18 @@ http.createServer(function(req, res) {
             res.end("404 File Not Found");
         }
     } else if (req.method === "POST") {
+        console.log(req.url);
     	var body = "";
     	req.on("data", function(chunk){
     		body += chunk;
     	})
     	req.on("end", function() {
-            tempFileName = JSON.parse(body).fileName;
+            tempFileName = req.url.replace("/","").replace(".json");
             if (!fs.existsSync('./testdata/'+tempFileName)){
                 fs.mkdirSync('./testdata/'+tempFileName);
             }
-            fs.writeFile('./testdata/'+tempFileName+'/'+tempFileName+".json", body, function(){
-                console.log("WRITE data" + " TO " + tempFileName + ".json");
+            fs.writeFile('./testdata'+req.url, body, function(){
+                console.log("WRITE data" + " TO " + req.url);
                 res.end();
             });
     	})
