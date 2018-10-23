@@ -115,19 +115,12 @@ http.createServer(function(req, res) {
     		body += chunk;
     	})
     	req.on("end", function() {
-
-            /*tempFileName = req.url.replace("/","").replace(".json","");
-            if (!fs.existsSync('./testdata/'+tempFileName)){
-                fs.mkdirSync('./testdata/'+tempFileName);
-            }*/
             fs.writeFile('./testdata'+req.url, body, function(){
                 console.log("WRITE data" + " TO " + req.url);
                 res.end();
             });
     	})
     }
-
-
 }).listen(8000);
 
 console.log("File server running on port 8000");
@@ -135,14 +128,9 @@ console.log("File server running on port 8000");
 // function added from RecordRTC/server.js
 function uploadFile(request, response) {
     // parse a file upload
-    //var mime = require('mime'); //error: can't find module mime
     var formidable = require('formidable'); //extra thing installed
     var util = require('util');
-
     var form = new formidable.IncomingForm();
-
-    //var dir = !!process.platform.match(/^win/) ? '\\uploads\\' : '/uploads/';
-
     form.uploadDir = __dirname;// + dir;
     form.keepExtensions = true;
     form.maxFieldsSize = 10 * 1024 * 1024;
