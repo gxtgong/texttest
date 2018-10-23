@@ -20,8 +20,6 @@ var userData = {};
 
 var passage = [];
 var speed = 0.8;
-
-var userData = {};
 var title ="textsample";
 
 

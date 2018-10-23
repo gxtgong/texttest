@@ -115,7 +115,10 @@ http.createServer(function(req, res) {
     		body += chunk;
     	})
     	req.on("end", function() {
-            tempFileName = JSON.parse(body)["name"];
+            tempFileName = req.url.replace("/","").replace(".json");
+            if (!fs.existsSync('./testdata/'+tempFileName)){
+                fs.mkdirSync('./testdata/'+tempFileName);
+            }
             fs.writeFile('./testdata'+req.url, body, function(){
                 console.log("WRITE data" + " TO " + req.url);
                 res.end();
