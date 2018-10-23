@@ -116,7 +116,7 @@ $(document).ready(function(){
     });
     
     split(corpus);
-    userData["wiki"] = [];
+    userData["textsample"] = [];
     flashText();
     $('input[type=radio][name=speed]').change(function(){
         speedLevel = this.value;
